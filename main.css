@@ -1,68 +1,82 @@
 .headerComp {
     background-color:azure;
     display: flex;
-    height : 90px;
-    padding : 10px;
+    height : 60px;
+    padding : 0 7px;
 }
 .logo-image {
-    width : 20%;
-    height : 100%;
+    width : min-content;
+    height : 55px;
     padding : 0 5px;
-    margin : 5px 0;
+    margin-left: 15px;
 }
 .logo-image > img {
-    width : 110px;
-    height: 90px;
+    width: auto;
+    height: inherit;
 }
 .header-nav-bar {
-    width :70%;
-    padding : 10px;
     position: absolute;
-    right: 0;
+    right: 20px;
 }
 .header-nav-bar > ul {
     display: flex;
-    font-size: 20px;
+    font-size: 18px;
+    justify-content: space-between;
+    align-items: center;
+    position : relative;
+    right: 50px;
 }
 .header-nav-bar > ul > li {
     list-style-type: none;
-    padding : 0 20px;
-    width : 12%;
     text-align: center;
+    padding: 0 18px;
+    font-size: 20px;
 }
 .header-nav-bar > ul > li:hover {
     border : 1px solid black;
     border-radius: 10px;
     background-color:cadetblue;
     cursor: pointer;
-    height: 30px;
+    height: 25px;
+    color : whitesmoke;
+}
+.header-nav-bar > ul > li > a:hover {
+    color : whitesmoke; 
 }
 .search-bar {
     padding: 10px;
     font-size: 40px;
-    width : 30%;
 }
 .search-bar > input {
     font-size: 15px;
-    width : 30%;
     text-align: center;
+    padding : 10px 20px;
+    border-radius : 12px;
 }
 
 .res-card {
     background-color: azure;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    width : 15%;
-    flex-wrap: wrap;
-    padding : 0 10px;
-    margin: 10px 10px;
+    width : 200px;
+    height: 320px;
+    padding : 0px 0px;
+    margin: 10px 20px;
+    border-radius: 30px;
+  transition: all 500ms ease-in-out;
+    
 }
 .res-card:hover{
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     margin: 2px solid aqua;
+    box-shadow: 0px 12px 30px 0px rgba(0, 0, 0, 0.2);
+  transition: all 800ms cubic-bezier(0.19, 1, 0.22, 1);
+  width : 210px;
+  height : 330px;
 }
 .res-card > img {
     height: 120px;
     width: 100%;
+    border-radius: 30px 30px 0 0;
 }
 .rest-container {
     display: flex;
@@ -71,12 +85,67 @@
     text-align: center;
     margin: 0 20px;
 }
+.res-card label {
+    font-size : 16px;
+    display: block;
+    padding : 4px 4px;
+}
+.res-card > span {
+    font-size : 15px;
+}
 .variousSearchOptions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content :unset;
     align-items: center;
 }
 button {
     font-size: 15px;
 }
+.sm-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin : 20px;
+}
+.sm-card {
+    height : 350px;
+    width : 220px;
+    background-color: #f0f0f0;
+    margin : 15px;
+    -webkit-mask: linear-gradient(120deg, #000 25%, #0005, #000 75%) right/250% 100%;
+         /* shimmer effect animation */
+         animation: shimmer 1s infinite;
+         background-repeat: no-repeat;
+}
+@keyframes shimmer {
+    100% {
+       /* setting up mask position at left side */
+       -webkit-mask-position: left
+    }
+ }
+ .link-style {
+    text-decoration: none;
+ }
+ .loginBtnStyle {
+    padding : 5px 10px;
+    border-radius: 15px;
+    margin-left : 40px;
+    cursor: pointer;
+ }
+ .loginBtnStyle:hover{
+    
+    background-color:cadetblue;
+    color : whitesmoke;
+ }
+ a {
+    text-decoration: none;
+    color :darkolivegreen
+ }
+ .option-items {
+    padding : 15px;
+ }
+ .search-btn-style {
+    padding: 10px;
+    border-radius: 15px;
+    background-color: whitesmoke;
+ }

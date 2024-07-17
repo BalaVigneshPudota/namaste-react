@@ -1,25 +1,70 @@
 import { restaurantList } from "../../utils/dumpData";
-import { useState } from "react";
+import Shimmer from "./Shimmer";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 import RestCard from "./RestCard";
 
 const Body = () => {
-  const [resList, setResList] = useState(restaurantList);
+  const [resList, setResList] = useState([]);
+  const [inputValue, setInputValue] = useState("");
 
-  return (
+  useEffect(() => {
+    fetchRestData();
+  }, []);
+  fetchRestData = async () => {
+    try {
+      const data = await fetch(
+        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.406498&lng=78.47724389999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+      );
+      const jsonData = await data.json();
+      setResList(
+        jsonData?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
+          ?.restaurants
+      );
+      // console.log(
+      //   jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
+      // );
+    } catch (e) {
+      console.log(JSON.stringify(e));
+    }
+  };
+  return resList.length == 0 ? (
+    <Shimmer />
+  ) : (
     <div className="body-content">
       <div className="variousSearchOptions">
-        <div className="search-bar">
-          <input type="search" placeholder="Type here to search"></input>
+        <div className="search-bar option-items">
+          <input
+            type="text"
+            placeholder="Search restaurants"
+            onChange={(e) => {
+              console.log(e.target.value);
+              if (e.target.value != "") {
+                setResList(
+                  [...resList].filter((item) => {
+                    return (
+                      item.info.name
+                        .toLowerCase()
+                        .indexOf(e.target.value.toLowerCase()) >= 0
+                    );
+                  })
+                );
+              } else {
+                setResList(restaurantList);
+              }
+            }}
+          ></input>
         </div>
 
-        <div className="topRated">
+        <div className="topRated option-items">
           <button
             type="button"
+            className="search-btn-style"
             onClick={() => {
               setResList(
                 resList.filter((item) => {
-                  return item.info.avgRating > 4.1;
+                  return item.info.avgRating > 4;
                 })
               );
               console.log(resList);
@@ -28,8 +73,9 @@ const Body = () => {
             Top Rated
           </button>
         </div>
-        <div className="sortItems">
+        <div className="sortItems option-items">
           <button
+            className="search-btn-style"
             type="button"
             onClick={() => {
               const sortedArr = resList
@@ -47,8 +93,9 @@ const Body = () => {
             Sort By Rating (Low to High)
           </button>
         </div>
-        <div className="quickDelivery">
+        <div className="quickDelivery option-items">
           <button
+            className="search-btn-style"
             type="button"
             onClick={() => {
               const sortedArr = resList
@@ -72,7 +119,18 @@ const Body = () => {
 
       <div className="rest-container">
         {resList.map((item) => {
-          return <RestCard resData={item} key={item.info.id} />;
+          return (
+            <Link key={item.info.id} to={"/restaurants/" + item.info.id}>
+              <RestCard resData={item} />
+            </Link>
+          );
+        })}
+        {resList.map((item) => {
+          return (
+            <Link key={item.info.id} to={"/restaurants/" + item.info.id}>
+              <RestCard resData={item} />
+            </Link>
+          );
         })}
       </div>
     </div>

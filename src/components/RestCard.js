@@ -1,7 +1,6 @@
 import { SAMPLE_URL } from "../../utils/constants";
 
 const RestCard = (props) => {
-  console.log(props);
   const {
     name,
     cuisines,
@@ -15,13 +14,13 @@ const RestCard = (props) => {
     <div className="res-card">
       <img src={SAMPLE_URL + cloudinaryImageId}></img>
       <div>
-        <h4>{name} </h4>
-        <h5>{cuisines.join(", ")}</h5>
-        <h5>
+        <label>{name} </label>{" "}
+        <span>
           {avgRatingString} Stars ({totalRatingsString})
-        </h5>
-        <h5>{sla.deliveryTime} mins</h5>
-        <h5>{costForTwo}</h5>
+        </span>
+        <label>{cuisines.join(", ")}</label>
+        <label>{sla.deliveryTime} mins</label>
+        <label>{costForTwo}</label>
       </div>
     </div>
   );
