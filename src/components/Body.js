@@ -1,34 +1,17 @@
 import { restaurantList } from "../../utils/dumpData";
 import Shimmer from "./Shimmer";
-import { useEffect, useState } from "react";
+import useRestuarantList from "../../utils/useRestaurantList";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import useNetworkOnline from "../../utils/useNetworkOnline";
 
 import RestCard from "./RestCard";
 
 const Body = () => {
-  const [resList, setResList] = useState([]);
   const [inputValue, setInputValue] = useState("");
-
-  useEffect(() => {
-    fetchRestData();
-  }, []);
-  fetchRestData = async () => {
-    try {
-      const data = await fetch(
-        "https://www.swiggy.com/dapi/restaurants/list/v5?lat=17.406498&lng=78.47724389999999&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
-      );
-      const jsonData = await data.json();
-      setResList(
-        jsonData?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle
-          ?.restaurants
-      );
-      // console.log(
-      //   jsonData.data.cards[4].card.card.gridElements.infoWithStyle.restaurants
-      // );
-    } catch (e) {
-      console.log(JSON.stringify(e));
-    }
-  };
+  const resList = useRestuarantList();
+  const onlineData = useNetworkOnline();
+  if (!onlineData) return <h1>Your network connection has been lost</h1>;
   return resList.length == 0 ? (
     <Shimmer />
   ) : (
